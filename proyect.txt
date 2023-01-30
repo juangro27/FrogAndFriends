@@ -1,0 +1,82 @@
+Classes
+-----------------------
+
+
+character's
+-----------------------
+active
+position
+height
+width
+lives: 3
+power: 
+    1. salta
+    2. escudo
+    3. ataca
+
+move()
+upStairs()
+downStairs()
+
+extras:
+
+    1 power more to each 
+    2 extra lives
+
+
+
+enemys
+-----------
+    height
+    width
+    towers
+    position
+
+--laser
+    powerStatus
+--towers    
+
+
+    launchArrow()
+
+
+backgrounds
+-------------
+
+
+arrows
+----------------
+    position
+    width
+    height
+    
+    move(direction)
+
+
+
+elevators 
+----------------
+    position
+    with
+    height
+
+
+    move()
+
+stairs
+-----------------
+
+    position
+    with
+    height
+
+
+Key
+------------------------------
+
+
+switch {
+
+
+
+}
