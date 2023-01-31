@@ -1,5 +1,5 @@
 class Character {
-  constructor(ctx, canvasSize, width, height, floors, stairs, walls) {
+  constructor(ctx, canvasSize, width, height, floors, stairs, doors, imgName) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.position = {
@@ -18,55 +18,69 @@ class Character {
     this.lives = 3;
     this.floors = floors;
     this.stairs = stairs;
-    this.walls = walls;
+    this.doors = doors;
+    this.image = new Image();
+    this.image.src = imgName;
+    this.image.frames = 2;
+    this.image.framesIndex = 0;
   }
-  init() {
-    this.drawAll();
+  init(framesCounter) {
     this.clearAll();
+    this.drawAll(framesCounter);
+
+    this.checkDoor();
   }
-  drawAll() {
-    this.createViking(
+  drawAll(framesCounter) {
+    this.createViking();
+    this.animate(framesCounter);
+  }
+  clearAll() {}
+  animate(framesCounter) {
+    console.log(this.image.framesIndex);
+    if (framesCounter % 30 === 0) {
+      this.image.framesIndex++;
+    }
+    if (this.image.framesIndex >= this.image.frames) {
+      this.image.framesIndex = 0;
+    }
+  }
+  createViking() {
+    this.ctx.drawImage(
+      this.image,
+      (this.image.width / this.image.frames) * this.image.framesIndex,
+      0,
+      this.image.width / this.image.frames,
+      this.image.height,
       this.position.x,
       this.position.y,
       this.vikingSize.w,
-      this.vikingSize.h,
-      "black"
+      this.vikingSize.h
     );
-  }
-  clearAll() {}
-  createViking(x, y, w, h, color) {
-    if (color) this.ctx.fillStyle = color;
-    this.ctx.fillRect(x, y, w, h);
   }
 
   move(keysStatus) {
     if (
       (keysStatus.RIGHT &&
-        checkHitBox(this.floors, 1, this.vikingSize, this.position) &&
-        !checkHitBox(this.walls, 1, this.vikingSize, this.position)) ||
+        checkHitBox(this.floors, 1, this.vikingSize, this.position)) ||
       (keysStatus.RIGHT &&
         checkHitBox(this.stairs, 1, this.vikingSize, this.position))
     ) {
       this.position.x += this.speed.x;
     } else if (
       (keysStatus.LEFT &&
-        checkHitBox(this.floors, 1, this.vikingSize, this.position) &&
-        !checkHitBox(this.walls, 1, this.vikingSize, this.position)) ||
+        checkHitBox(this.floors, 1, this.vikingSize, this.position)) ||
       (keysStatus.LEFT &&
-        checkHitBox(this.stairs, 1, this.vikingSize, this.position) &&
-        !checkHitBox(this.walls, 1, this.vikingSize, this.position))
+        checkHitBox(this.stairs, 1, this.vikingSize, this.position))
     ) {
       this.position.x -= this.speed.x;
     } else if (
       keysStatus.UP &&
-      checkHitBox(this.stairs, 1, this.vikingSize, this.position) &&
-      !checkHitBox(this.walls, 1, this.vikingSize, this.position)
+      checkHitBox(this.stairs, 1, this.vikingSize, this.position)
     ) {
       this.position.y -= this.speed.x;
     } else if (
       keysStatus.DOWN &&
-      checkHitBox(this.stairs, 1, this.vikingSize, this.position) &&
-      !checkHitBox(this.walls, 1, this.vikingSize, this.position)
+      checkHitBox(this.stairs, 1, this.vikingSize, this.position)
     ) {
       this.position.y += this.speed.x;
     }
@@ -76,6 +90,9 @@ class Character {
     ) {
       this.setGravity();
     }
+  }
+  checkDoor() {
+    checkHitBox(this.doors, 1, this.vikingSize, this.position);
   }
   setGravity() {
     this.position.y += this.speed.y;

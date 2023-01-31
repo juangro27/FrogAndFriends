@@ -14,10 +14,12 @@ const vikingGame = {
   levelsMax: 1,
   levels: [],
   floors: [],
-  walls: [],
   stairs: [],
+  doors: [],
   characters: [],
+  enemies: [],
   arrows: [],
+  keys: [],
   KEYS: {
     CTRL: "Control",
     SPACE: " ",
@@ -51,9 +53,12 @@ const vikingGame = {
     this.setContext();
     this.setDimensions();
     this.createLevels();
+
     this.saveFloors();
     this.saveStairs();
-    this.saveWalls();
+    this.saveKeys();
+    this.saveDoors();
+    this.createEnemies();
     this.createCharacters();
     this.start();
   },
@@ -71,20 +76,17 @@ const vikingGame = {
   createLevels() {
     this.levels.push(new Background(this.ctx, this.canvasSize));
     this.levels.push(new Level1(this.ctx, this.canvasSize));
+    this.levels.push(new Level2(this.ctx, this.canvasSize));
+    this.levels.push(new Level3(this.ctx, this.canvasSize));
   },
-
-  saveFloors() {
-    this.levels.forEach((e) => this.floors.push(e.floors));
+  createEnemies() {
+    this.enemies.push(
+      new Sentinel(this.ctx, this.canvasSize, 100, 450, 50, 50, 100, "right")
+    );
+    this.enemies.push(
+      new Skeleton(this.ctx, this.canvasSize, 400, 450, 50, 50, 100)
+    );
   },
-
-  saveStairs() {
-    this.levels.forEach((e) => this.stairs.push(e.stairs));
-  },
-
-  saveWalls() {
-    this.levels.forEach((e) => this.walls.push(e.walls));
-  },
-
   createCharacters() {
     this.characters.push(
       new Viking1(
@@ -94,7 +96,8 @@ const vikingGame = {
         50,
         this.floors,
         this.stairs,
-        this.walls
+        this.doors,
+        "./img/viking1.png"
       )
     );
     this.characters.push(
@@ -105,7 +108,8 @@ const vikingGame = {
         50,
         this.floors,
         this.stairs,
-        this.walls
+        this.doors,
+        "./img/viking1.png"
       )
     );
     this.characters.push(
@@ -116,12 +120,12 @@ const vikingGame = {
         50,
         this.floors,
         this.stairs,
-        this.walls,
-        this.arrows
+        this.arrows,
+        this.doors,
+        "./img/viking1.png"
       )
     );
   },
-
   changeCharacter(changeCharacterCount) {
     if (changeCharacterCount === 0) {
       this.characters[0].status = true;
@@ -150,7 +154,7 @@ const vikingGame = {
       this.characters[0].checkJump(this.keysStatus);
       this.characters[0].jump();
     }
-    if (this.framesCounter % 150 === 0) {
+    if (this.framesCounter % 100 === 0) {
       if (
         this.keysStatus.SPACE === true &&
         this.keysStatus.RIGHT === true &&
@@ -177,10 +181,23 @@ const vikingGame = {
       }
     }
   },
+  saveFloors() {
+    this.levels.forEach((e) => this.floors.push(e.floors));
+  },
+
+  saveStairs() {
+    this.levels.forEach((e) => this.stairs.push(e.stairs));
+  },
+  saveKeys() {
+    this.levels.forEach((e) => this.keys.push(e.keys));
+  },
+  saveDoors() {
+    this.levels.forEach((e) => this.doors.push(e.doors));
+  },
 
   start() {
     const intervalID = setInterval(() => {
-      this.framesCounter > 5000
+      this.framesCounter > 6001
         ? (this.framesCounter = 0)
         : this.framesCounter++;
       this.clearAll();
@@ -195,9 +212,11 @@ const vikingGame = {
     this.levels[0].init();
     this.levels[1].init();
 
-    this.characters[0].init();
-    this.characters[1].init();
-    this.characters[2].init();
+    this.characters[0].init(this.framesCounter);
+    this.characters[1].init(this.framesCounter);
+    this.characters[2].init(this.framesCounter);
+    this.enemies[0].init(this.framesCounter);
+    this.enemies[1].init(this.framesCounter);
     this.characters[2].arrows.forEach((e) => e.init());
   },
 

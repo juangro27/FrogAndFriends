@@ -1,13 +1,13 @@
 class Arrow {
-  constructor(ctx, canvasSize, vikingSize, vikingPosition, direction) {
+  constructor(ctx, canvasSize, subjectSize, subjectPosition, direction) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
-    this.vikingPosition = vikingPosition;
-    this.vikingSize = vikingSize;
+    this.vikingPosition = subjectPosition;
+    this.vikingSize = subjectSize;
     this.direction = direction;
     this.position = {
-      x: vikingPosition.x + vikingSize.w / 2,
-      y: vikingPosition.y + vikingSize.h / 2,
+      x: subjectPosition.x + subjectSize.w / 2,
+      y: subjectPosition.y + subjectSize.h / 2,
     };
     this.size = {
       w: 15,

@@ -1,20 +1,11 @@
 class Viking1 extends Character {
-  constructor(ctx, canvasSize, width, height, floors, stairs, walls) {
-    super(ctx, canvasSize, width, height, floors, stairs, walls);
+  constructor(ctx, canvasSize, width, height, floors, stairs, doors, imgName) {
+    super(ctx, canvasSize, width, height, floors, stairs, doors, imgName);
     this.status = true;
     this.canJump = undefined;
     this.physics = {
       gravity: 0.5,
     };
-  }
-  drawAll() {
-    this.createViking(
-      this.position.x,
-      this.position.y,
-      this.vikingSize.w,
-      this.vikingSize.h,
-      "blue"
-    );
   }
   move(keysStatus) {
     if (keysStatus.RIGHT) {

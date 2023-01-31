@@ -1,49 +1,93 @@
-function checkHitBox(element, level, vikingSize, vikingPosition) {
-  if (element.some((e) => e[level] instanceof Floor)) {
-    const floors = element[level].map((e) => {
+function checkHitBox(
+  levelElements,
+  typeElement,
+  level,
+  vikingSize,
+  vikingPosition
+) {
+  if (levelElements[level].some((elm) => elm instanceof typeElement)) {
+    const arrayLevelElements = levelElements[level].map((elm) => {
       if (
-        vikingPosition.x < e.position.x + e.size.w &&
-        vikingPosition.x + vikingSize.w > e.position.x &&
-        vikingPosition.y < e.position.y + e.size.h &&
-        vikingSize.h + vikingPosition.y > e.position.y
+        vikingPosition.x < elm.position.x + elm.size.w &&
+        vikingPosition.x + vikingSize.w > elm.position.x &&
+        vikingPosition.y < elm.position.y + elm.size.h &&
+        vikingSize.h + vikingPosition.y > elm.position.y
       ) {
-        vikingPosition.y = e.position.y - vikingSize.h + 1;
+        vikingPosition.y = elm.position.y - vikingSize.h + 1;
         return true;
       } else {
         return false;
       }
     });
-    return floors.some((e) => e === true);
+    return arrayLevelElements.some((elm) => elm === true);
   }
-  if (element.some((e) => e[level] instanceof Stair)) {
-    const stairs = element[level].map((e) => {
-      if (
-        vikingPosition.x < e.position.x + e.size.w &&
-        vikingPosition.x + vikingSize.w > e.position.x &&
-        vikingPosition.y < e.position.y + e.size.h &&
-        vikingSize.h + vikingPosition.y > e.position.y
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-    return stairs.some((e) => e === true);
-  }
-  if (element.some((e) => e[level] instanceof Wall)) {
-    const walls = element[level].find((e) => {
-      if (
-        vikingPosition.x < e.position.x + e.size.w &&
-        vikingPosition.x + vikingSize.w > e.position.x &&
-        vikingPosition.y < e.position.y + e.size.h &&
-        vikingSize.h + vikingPosition.y > e.position.y
-      ) {
-        return e;
-      } else {
-        return false;
-      }
-    });
+}
 
-    return walls;
+function checkHitBox(levelElements, level, vikingSize, vikingPosition) {
+  if (levelElements[level].some((elm) => elm instanceof Floor)) {
+    const floors = levelElements[level].map((elm) => {
+      if (
+        vikingPosition.x < elm.position.x + elm.size.w &&
+        vikingPosition.x + vikingSize.w > elm.position.x &&
+        vikingPosition.y < elm.position.y + elm.size.h &&
+        vikingSize.h + vikingPosition.y > elm.position.y
+      ) {
+        vikingPosition.y = elm.position.y - vikingSize.h + 1;
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return floors.some((elm) => elm === true);
+  }
+  if (levelElements[level].some((elm) => elm instanceof Stair)) {
+    const stairs = levelElements[level].map((elm) => {
+      if (
+        vikingPosition.x < elm.position.x + elm.size.w &&
+        vikingPosition.x + vikingSize.w > elm.position.x &&
+        vikingPosition.y < elm.position.y + elm.size.h &&
+        vikingSize.h + vikingPosition.y > elm.position.y
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return stairs.some((elm) => elm === true);
+  }
+
+  if (levelElements[level].some((elm) => elm instanceof Key)) {
+    const keys = levelElements[level].map((elm) => {
+      if (
+        vikingPosition.x < elm.position.x + elm.size.w &&
+        vikingPosition.x + vikingSize.w > elm.position.x &&
+        vikingPosition.y < elm.position.y + elm.size.h &&
+        vikingSize.h + vikingPosition.y > elm.position.y
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return keys.some((elm) => elm === true);
+  }
+
+  if (levelElements[level].some((elm) => elm instanceof Door)) {
+    // console.log("in ----");
+    const doors = levelElements[level].map((elm) => {
+      if (
+        vikingPosition.x < elm.position.x + elm.size.w &&
+        vikingPosition.x + vikingSize.w > elm.position.x &&
+        vikingPosition.y < elm.position.y + elm.size.h &&
+        vikingSize.h + vikingPosition.y > elm.position.y
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return doors.some((elm) => elm === true);
+  } else {
+    return console.log("no se cumple");
   }
 }

@@ -1,6 +1,16 @@
 class Viking3 extends Character {
-  constructor(ctx, canvasSize, width, height, floors, stairs, walls, arrows) {
-    super(ctx, canvasSize, width, height, floors, stairs, walls);
+  constructor(
+    ctx,
+    canvasSize,
+    width,
+    height,
+    floors,
+    stairs,
+    arrows,
+    doors,
+    imgName
+  ) {
+    super(ctx, canvasSize, width, height, floors, stairs, doors, imgName);
     this.status = false;
     this.arrows = arrows;
   }
@@ -15,16 +25,7 @@ class Viking3 extends Character {
       )
     );
   }
-  drawAll() {
-    this.clearAll();
-    this.createViking(
-      this.position.x,
-      this.position.y,
-      this.vikingSize.w,
-      this.vikingSize.h,
-      "red"
-    );
-  }
+
   clearAll() {
     this.arrows = this.arrows.filter(
       (e) =>
