@@ -73,13 +73,13 @@ class Level1 extends Background {
       this.stairs.push(new Stair(this.ctx, this.canvasSize, ...e));
     });
     this.doors.push(new Door(this.ctx, this.canvasSize));
-    this.keys.push(new Key(this.ctx, this.canvasSize));
+    this.keysItems.push(new Key(this.ctx, this.canvasSize));
   }
   drawAll() {
     this.floors.forEach((e) => e.drawFloor());
     this.stairs.forEach((e) => e.drawStairs());
     this.doors.forEach((e) => e.init());
-    this.keys.forEach((e) => e.init());
+    this.keysItems.forEach((e) => e.init());
   }
   clearAll() {}
 }

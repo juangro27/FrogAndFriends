@@ -6,7 +6,7 @@ class Background {
     this.stairs = [];
     this.walls = [];
     this.doors = [];
-    this.keys = [];
+    this.keysItems = [];
     this.generateBackground();
   }
   createRectangle(x, y, w, h, color) {

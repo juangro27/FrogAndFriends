@@ -2,15 +2,27 @@ class Viking3 extends Character {
   constructor(
     ctx,
     canvasSize,
+    imgName,
     width,
     height,
     floors,
     stairs,
-    arrows,
     doors,
-    imgName
+    keysItems,
+    arrows
   ) {
-    super(ctx, canvasSize, width, height, floors, stairs, doors, imgName);
+    super(
+      ctx,
+      canvasSize,
+      imgName,
+      width,
+      height,
+      floors,
+      stairs,
+      doors,
+      keysItems,
+      arrows
+    );
     this.status = false;
     this.arrows = arrows;
   }

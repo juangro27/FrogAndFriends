@@ -1,6 +1,26 @@
 class Viking1 extends Character {
-  constructor(ctx, canvasSize, width, height, floors, stairs, doors, imgName) {
-    super(ctx, canvasSize, width, height, floors, stairs, doors, imgName);
+  constructor(
+    ctx,
+    canvasSize,
+    imgName,
+    width,
+    height,
+    floors,
+    stairs,
+    doors,
+    keysItems
+  ) {
+    super(
+      ctx,
+      canvasSize,
+      imgName,
+      width,
+      height,
+      floors,
+      stairs,
+      doors,
+      keysItems
+    );
     this.status = true;
     this.canJump = undefined;
     this.physics = {
@@ -24,7 +44,8 @@ class Viking1 extends Character {
       this.position.y += this.speed.x;
     }
     if (
-      checkHitBox(this.floors, 1, this.vikingSize, this.position) === false &&
+      checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor") ===
+        false &&
       checkHitBox(this.stairs, 1, this.vikingSize, this.position) === false
     ) {
       this.setGravity();
@@ -32,13 +53,15 @@ class Viking1 extends Character {
   }
 
   checkJump(keysStatus) {
-    if (checkHitBox(this.floors, 1, this.vikingSize, this.position)) {
+    if (checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")) {
       this.speed.y = 0;
       this.canJump = true;
       if (keysStatus.SPACE) {
         this.canJump = true;
       }
-      if (!checkHitBox(this.floors, 1, this.vikingSize, this.position)) {
+      if (
+        !checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")
+      ) {
         this.canJump = false;
       }
     }
@@ -53,7 +76,7 @@ class Viking1 extends Character {
     }
   }
   setGravity() {
-    if (!checkHitBox(this.floors, 1, this.vikingSize, this.position)) {
+    if (!checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")) {
       this.position.y += this.speed.y;
       this.speed.y += this.physics.gravity;
     }

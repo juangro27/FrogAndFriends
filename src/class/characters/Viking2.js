@@ -2,15 +2,25 @@ class Viking2 extends Character {
   constructor(
     ctx,
     canvasSize,
+    imgName,
     width,
     height,
     floors,
     stairs,
     doors,
-
-    imgName
+    keysItems
   ) {
-    super(ctx, canvasSize, width, height, floors, stairs, doors, imgName);
+    super(
+      ctx,
+      canvasSize,
+      imgName,
+      width,
+      height,
+      floors,
+      stairs,
+      doors,
+      keysItems
+    );
     this.status = false;
   }
   shell() {}

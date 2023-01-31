@@ -1,5 +1,15 @@
 class Character {
-  constructor(ctx, canvasSize, width, height, floors, stairs, doors, imgName) {
+  constructor(
+    ctx,
+    canvasSize,
+    imgName,
+    width,
+    height,
+    floors,
+    stairs,
+    doors,
+    keysItems
+  ) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.position = {
@@ -19,16 +29,17 @@ class Character {
     this.floors = floors;
     this.stairs = stairs;
     this.doors = doors;
+    this.keysItems = keysItems;
+    this.haveKey = false;
     this.image = new Image();
     this.image.src = imgName;
-    this.image.frames = 2;
+    this.image.frames = 6;
     this.image.framesIndex = 0;
   }
   init(framesCounter) {
     this.clearAll();
     this.drawAll(framesCounter);
-
-    this.checkDoor();
+    this.checkKey();
   }
   drawAll(framesCounter) {
     this.createViking();
@@ -36,7 +47,6 @@ class Character {
   }
   clearAll() {}
   animate(framesCounter) {
-    console.log(this.image.framesIndex);
     if (framesCounter % 30 === 0) {
       this.image.framesIndex++;
     }
@@ -61,14 +71,14 @@ class Character {
   move(keysStatus) {
     if (
       (keysStatus.RIGHT &&
-        checkHitBox(this.floors, 1, this.vikingSize, this.position)) ||
+        checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")) ||
       (keysStatus.RIGHT &&
         checkHitBox(this.stairs, 1, this.vikingSize, this.position))
     ) {
       this.position.x += this.speed.x;
     } else if (
       (keysStatus.LEFT &&
-        checkHitBox(this.floors, 1, this.vikingSize, this.position)) ||
+        checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")) ||
       (keysStatus.LEFT &&
         checkHitBox(this.stairs, 1, this.vikingSize, this.position))
     ) {
@@ -85,14 +95,18 @@ class Character {
       this.position.y += this.speed.x;
     }
     if (
-      checkHitBox(this.floors, 1, this.vikingSize, this.position) === false &&
+      checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor") ===
+        false &&
       checkHitBox(this.stairs, 1, this.vikingSize, this.position) === false
     ) {
       this.setGravity();
     }
   }
-  checkDoor() {
-    checkHitBox(this.doors, 1, this.vikingSize, this.position);
+  isInDoor() {
+    return checkHitBox(this.doors, 1, this.vikingSize, this.position);
+  }
+  checkKey() {
+    return checkHitBox(this.keysItems, 1, this.vikingSize, this.position);
   }
   setGravity() {
     this.position.y += this.speed.y;
