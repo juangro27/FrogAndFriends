@@ -17,6 +17,7 @@ const vikingGame = {
   walls: [],
   stairs: [],
   characters: [],
+  arrows: [],
   KEYS: {
     CTRL: "Control",
     SPACE: " ",
@@ -115,7 +116,8 @@ const vikingGame = {
         50,
         this.floors,
         this.stairs,
-        this.walls
+        this.walls,
+        this.arrows
       )
     );
   },
@@ -142,11 +144,38 @@ const vikingGame = {
     this.characters.forEach((e) => {
       e.status === true && e.move(this.keysStatus);
     });
+  },
+  useHability() {
     if (this.keysStatus.SPACE === true && this.characters[0].status === true) {
       this.characters[0].checkJump(this.keysStatus);
       this.characters[0].jump();
     }
-    // }
+    if (this.framesCounter % 150 === 0) {
+      if (
+        this.keysStatus.SPACE === true &&
+        this.keysStatus.RIGHT === true &&
+        this.characters[2].status === true
+      ) {
+        this.characters[2].attack("right");
+      } else if (
+        this.keysStatus.SPACE === true &&
+        this.keysStatus.LEFT === true &&
+        this.characters[2].status === true
+      ) {
+        this.characters[2].attack("left");
+      } else if (
+        this.keysStatus.SPACE === true &&
+        this.keysStatus.UP === true &&
+        this.characters[2].status === true
+      ) {
+        this.characters[2].attack("up");
+      } else if (
+        this.keysStatus.SPACE === true &&
+        this.characters[2].status === true
+      ) {
+        this.characters[2].attack("right");
+      }
+    }
   },
 
   start() {
@@ -157,6 +186,7 @@ const vikingGame = {
       this.clearAll();
       this.drawAll();
       this.moveCharacters();
+      this.useHability();
     }, 1000 / this.FPS);
     this.intervalID = intervalID;
   },
@@ -165,9 +195,10 @@ const vikingGame = {
     this.levels[0].init();
     this.levels[1].init();
 
-    this.characters[0].drawAll();
-    this.characters[1].drawAll();
-    this.characters[2].drawAll();
+    this.characters[0].init();
+    this.characters[1].init();
+    this.characters[2].init();
+    this.characters[2].arrows.forEach((e) => e.init());
   },
 
   clearAll() {

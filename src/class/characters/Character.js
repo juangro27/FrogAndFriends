@@ -17,10 +17,12 @@ class Character {
     this.status = undefined;
     this.lives = 3;
     this.floors = floors;
-    this.actualStairsY = undefined;
-    this.actualStairsX = undefined;
     this.stairs = stairs;
     this.walls = walls;
+  }
+  init() {
+    this.drawAll();
+    this.clearAll();
   }
   drawAll() {
     this.createViking(
@@ -31,6 +33,7 @@ class Character {
       "black"
     );
   }
+  clearAll() {}
   createViking(x, y, w, h, color) {
     if (color) this.ctx.fillStyle = color;
     this.ctx.fillRect(x, y, w, h);
