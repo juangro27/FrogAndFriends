@@ -7,16 +7,21 @@ class Door {
       y: 430,
     };
     this.size = {
-      w: 60,
-      h: 80,
+      w: 48,
+      h: 48,
     };
+    this.image = new Image();
+    this.image.src = "./img/loot.png";
   }
   init() {
     this.drawAll();
   }
   drawAll() {
-    this.ctx.fillStyle = "IndianRed";
-    this.ctx.fillRect(
+    this.createLoot();
+  }
+  createLoot() {
+    this.ctx.drawImage(
+      this.image,
       this.position.x,
       this.position.y,
       this.size.w,

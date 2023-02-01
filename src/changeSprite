@@ -1,0 +1,4 @@
+function changeSprite(character, spriteName, numberFrames) {
+  character.image.frames = numberFrames;
+  character.image.src = spriteName;
+}

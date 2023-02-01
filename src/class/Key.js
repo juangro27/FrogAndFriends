@@ -7,16 +7,22 @@ class Key {
       y: 70,
     };
     this.size = {
-      w: 20,
-      h: 20,
+      w: 32,
+      h: 32,
     };
+    this.image = new Image();
+    this.image.src = "./img/key.png";
   }
   init() {
     this.drawAll();
   }
+
   drawAll() {
-    this.ctx.fillStyle = "DeepPink";
-    this.ctx.fillRect(
+    this.createKey();
+  }
+  createKey() {
+    this.ctx.drawImage(
+      this.image,
       this.position.x,
       this.position.y,
       this.size.w,

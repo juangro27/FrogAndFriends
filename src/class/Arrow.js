@@ -1,30 +1,50 @@
 class Arrow {
-  constructor(ctx, canvasSize, subjectSize, subjectPosition, direction) {
+  constructor(
+    ctx,
+    canvasSize,
+    subjectSize,
+    subjectPosition,
+    initialPosition,
+    direction,
+    imgName,
+    numberFrames
+  ) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.vikingPosition = subjectPosition;
-    this.vikingSize = subjectSize;
+    this.subjectSize = subjectSize;
     this.direction = direction;
     this.position = {
-      x: subjectPosition.x + subjectSize.w / 2,
-      y: subjectPosition.y + subjectSize.h / 2,
+      x: initialPosition.x,
+      y: initialPosition.y,
     };
     this.size = {
-      w: 15,
-      h: 3,
+      w: 16,
+      h: 16,
     };
     this.speed = {
       x: 1.5,
       y: 1,
     };
+    this.image = new Image();
+    this.image.src = imgName;
+    this.image.frames = numberFrames;
+    this.image.framesIndex = 0;
   }
   init() {
     this.drawAll();
     this.move(this.direction);
   }
   drawAll() {
-    this.ctx.fillStyle = "blue";
-    this.ctx.fillRect(
+    this.createArrow();
+  }
+  createArrow() {
+    this.ctx.drawImage(
+      this.image,
+      (this.image.width / this.image.frames) * this.image.framesIndex,
+      0,
+      this.image.width / this.image.frames,
+      this.image.height,
       this.position.x,
       this.position.y,
       this.size.w,

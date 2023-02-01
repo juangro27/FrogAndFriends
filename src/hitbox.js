@@ -15,7 +15,25 @@ function checkHitBox(levelElements, level, vikingSize, vikingPosition, type) {
   });
   return arrayLevelElements.some((elm) => elm === true);
 }
-
+function getHitBoxElements(arrows, character) {
+  if (arrows) {
+    const arrayLevelElements = arrows.find((elm) => {
+      if (
+        character.position.x < elm.position.x + elm.size.w &&
+        character.position.x + character.size.w > elm.position.x &&
+        character.position.y < elm.position.y + elm.size.h &&
+        character.size.h + character.position.y > elm.position.y
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (!arrayLevelElements) return false;
+    const colisionArray = [[arrayLevelElements], [character]];
+    return colisionArray;
+  }
+}
 // function checkHitBox(levelElements, level, vikingSize, vikingPosition) {
 //   if (levelElements[level].some((elm) => elm instanceof Floor)) {
 //     const floors = levelElements[level].map((elm) => {

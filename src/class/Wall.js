@@ -1,4 +1,4 @@
-class Stair {
+class Wall {
   constructor(ctx, canvasSize, x, y, width, height) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
@@ -11,11 +11,15 @@ class Stair {
       y: y,
     };
     this.image = new Image();
-    this.image.src = "./img/background/stair.png";
+    this.image.src = "./img/background/tile.png";
   }
-  drawStairs() {
-    this.ctx.drawImage(
-      this.image,
+  drawAll() {
+    this.drawWall();
+  }
+  drawWall() {
+    const ptrn = this.ctx.createPattern(this.image, "repeat");
+    this.ctx.fillStyle = ptrn;
+    this.ctx.fillRect(
       this.position.x,
       this.position.y,
       this.size.w,

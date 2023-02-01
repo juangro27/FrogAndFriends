@@ -1,8 +1,19 @@
 class Enemy {
-  constructor(ctx, canvasSize, x, y, w, h, hp) {
+  constructor(
+    ctx,
+    canvasSize,
+    x,
+    y,
+    w,
+    h,
+    lives,
+    actualLevel,
+    imgName,
+    numberFrames
+  ) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
-    this.hp = hp;
+    this.lives = lives;
     this.position = {
       x: x,
       y: y,
@@ -11,32 +22,80 @@ class Enemy {
       w: w,
       h: h,
     };
+    this.image = new Image();
+    this.image.src = imgName;
+    this.image.frames = numberFrames;
+    this.image.framesIndex = 0;
+    this.actualLevel = actualLevel;
   }
-  init() {
-    this.drawAll();
+  init(framesCounter) {
+    this.drawAll(framesCounter);
     this.clearAll();
   }
   drawAll() {
-    this.createEnemy(
+    this.createEnemy();
+    this.animate(framesCounter);
+  }
+  animate(framesCounter) {
+    if (framesCounter % 30 === 0) {
+      this.image.framesIndex++;
+    }
+    if (this.image.framesIndex >= this.image.frames) {
+      this.image.framesIndex = 0;
+    }
+  }
+  changeSprite(spriteName, numberFrames) {
+    this.image.frames = numberFrames;
+    this.image.src = spriteName;
+  }
+  createEnemy() {
+    this.ctx.drawImage(
+      this.image,
+      (this.image.width / this.image.frames) * this.image.framesIndex,
+      0,
+      this.image.width / this.image.frames,
+      this.image.height,
       this.position.x,
       this.position.y,
       this.size.w,
-      this.size.h,
-      "brown"
+      this.size.h
     );
   }
   clearAll() {}
-  createEnemy(x, y, w, h, color) {
-    if (color) this.ctx.fillStyle = color;
-    this.ctx.fillRect(x, y, w, h);
-  }
 }
 
 class Sentinel extends Enemy {
-  constructor(ctx, canvasSize, x, y, w, h, hp, direction) {
-    super(ctx, canvasSize, x, y, w, h, hp);
+  constructor(
+    ctx,
+    canvasSize,
+    x,
+    y,
+    w,
+    h,
+    lives,
+    actualLevel,
+    direction,
+    imgName,
+    numberFrames
+  ) {
+    super(
+      ctx,
+      canvasSize,
+      x,
+      y,
+      w,
+      h,
+      lives,
+      actualLevel,
+      imgName,
+      numberFrames
+    );
+    this.arrowInitalPosition = {
+      x: this.position.x + this.size.w - 35,
+      y: this.position.y + 10,
+    };
     this.direction = direction;
-    this.shoots = [];
+    this.arrows = [];
   }
   init(framesCounter) {
     this.clearAll();
@@ -45,40 +104,60 @@ class Sentinel extends Enemy {
       this.shoot();
     }
 
-    this.drawAll();
+    this.drawAll(framesCounter);
   }
   shoot() {
-    this.shoots.push(
+    this.arrows.push(
       new Arrow(
         this.ctx,
         this.canvasSize,
         this.size,
         this.position,
-        this.direction
+        this.arrowInitalPosition,
+        this.direction,
+        "./img/sentinel/Bullet.png",
+        1
       )
     );
   }
-  drawAll() {
+  drawAll(framesCounter) {
     this.clearAll();
-    this.shoots.forEach((e) => e.init());
-    this.createEnemy(
-      this.position.x,
-      this.position.y,
-      this.size.w,
-      this.size.h,
-      "red"
-    );
+    this.arrows.forEach((e) => e.init());
+    this.createEnemy();
+    this.animate(framesCounter);
   }
   clearAll() {
-    this.shoots = this.shoots.filter(
+    this.arrows = this.arrows.filter(
       (e) =>
         e.position.y < this.canvasSize.h && e.position.x < this.canvasSize.w
     );
   }
 }
 class Skeleton extends Enemy {
-  constructor(ctx, canvasSize, x, y, w, h, hp) {
-    super(ctx, canvasSize, x, y, w, h, hp);
+  constructor(
+    ctx,
+    canvasSize,
+    x,
+    y,
+    w,
+    h,
+    lives,
+    actualLevel,
+    imgName,
+    numberFrames
+  ) {
+    super(
+      ctx,
+      canvasSize,
+      x,
+      y,
+      w,
+      h,
+      lives,
+      actualLevel,
+      imgName,
+      numberFrames
+    );
     this.direction = undefined;
     this.speed = {
       x: 0.5,
@@ -92,19 +171,16 @@ class Skeleton extends Enemy {
     this.move(this.direction);
     this.drawAll(framesCounter);
   }
-  drawAll() {
-    this.createEnemy(
-      this.position.x,
-      this.position.y,
-      this.size.w,
-      this.size.h,
-      "green"
-    );
+  drawAll(framesCounter) {
+    this.createEnemy();
+    this.animate(framesCounter);
   }
   move(direction) {
     if (direction === "right") {
+      this.changeSprite("./img/pork/porkRigth.png", 12);
       this.position.x += this.speed.x;
     } else if (direction === "left") {
+      this.changeSprite("./img/pork/porkLeft.png", 12);
       this.position.x -= this.speed.x;
     }
   }

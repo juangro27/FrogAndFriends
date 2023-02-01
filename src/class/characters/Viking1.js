@@ -3,23 +3,29 @@ class Viking1 extends Character {
     ctx,
     canvasSize,
     imgName,
+    numberFrames,
     width,
     height,
+    actualLevel,
     floors,
     stairs,
     doors,
-    keysItems
+    keysItems,
+    enemyArrows
   ) {
     super(
       ctx,
       canvasSize,
       imgName,
+      numberFrames,
       width,
       height,
+      actualLevel,
       floors,
       stairs,
       doors,
-      keysItems
+      keysItems,
+      enemyArrows
     );
     this.status = true;
     this.canJump = undefined;
@@ -30,37 +36,59 @@ class Viking1 extends Character {
   move(keysStatus) {
     if (keysStatus.RIGHT) {
       this.position.x += this.speed.x;
+      this.changeSprite("./img/frogWalkRigth.png", 12);
     } else if (keysStatus.LEFT) {
       this.position.x -= this.speed.x;
+      this.changeSprite("./img/frogWalkleft.png", 12);
     } else if (
       keysStatus.UP &&
-      checkHitBox(this.stairs, 1, this.vikingSize, this.position)
+      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
     ) {
       this.position.y -= this.speed.x;
     } else if (
       keysStatus.DOWN &&
-      checkHitBox(this.stairs, 1, this.vikingSize, this.position)
+      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
     ) {
       this.position.y += this.speed.x;
     }
     if (
-      checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor") ===
-        false &&
-      checkHitBox(this.stairs, 1, this.vikingSize, this.position) === false
+      checkHitBox(
+        this.floors,
+        this.actualLevel,
+        this.size,
+        this.position,
+        "floor"
+      ) === false &&
+      checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
+        false
     ) {
       this.setGravity();
     }
   }
 
   checkJump(keysStatus) {
-    if (checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")) {
+    if (
+      checkHitBox(
+        this.floors,
+        this.actualLevel,
+        this.size,
+        this.position,
+        "floor"
+      )
+    ) {
       this.speed.y = 0;
       this.canJump = true;
       if (keysStatus.SPACE) {
         this.canJump = true;
       }
       if (
-        !checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")
+        !checkHitBox(
+          this.floors,
+          this.actualLevel,
+          this.size,
+          this.position,
+          "floor"
+        )
       ) {
         this.canJump = false;
       }
@@ -76,7 +104,15 @@ class Viking1 extends Character {
     }
   }
   setGravity() {
-    if (!checkHitBox(this.floors, 1, this.vikingSize, this.position, "floor")) {
+    if (
+      !checkHitBox(
+        this.floors,
+        this.actualLevel,
+        this.size,
+        this.position,
+        "floor"
+      )
+    ) {
       this.position.y += this.speed.y;
       this.speed.y += this.physics.gravity;
     }
