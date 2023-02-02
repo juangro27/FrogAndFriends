@@ -1,4 +1,4 @@
-class Viking3 extends Character {
+class Character3 extends Character {
   constructor(
     ctx,
     canvasSize,

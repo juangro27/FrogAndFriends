@@ -1,4 +1,4 @@
-const vikingGame = {
+const frogAndFriends = {
   name: undefined,
   description: undefined,
   version: "1.0.0",
@@ -11,7 +11,7 @@ const vikingGame = {
     w: 1024,
     h: 768,
   },
-  actualLevel: 4,
+  actualLevel: 1,
   levels: [],
   floors: [],
   stairs: [],
@@ -21,6 +21,7 @@ const vikingGame = {
   porks: [],
   arrows: [],
   keysItems: [],
+  keyTaken: false,
   keys: {
     CTRL: "Control",
     SPACE: " ",
@@ -79,18 +80,19 @@ const vikingGame = {
     this.levels.push(new Level2(this.ctx, this.canvasSize));
     this.levels.push(new Level3(this.ctx, this.canvasSize));
     this.levels.push(new Level4(this.ctx, this.canvasSize));
+    this.levels.push(new Level5(this.ctx, this.canvasSize));
   },
 
   createEnemies(level) {
     if (this.levels[level].sentinels.length >= 1) {
-      this.levels[level].sentinels.forEach((sentinel) =>
+      this.levels[level].sentinels.forEach((sentinel) => {
         this.sentinels.push(
           new Sentinel(this.ctx, this.canvasSize, ...sentinel)
-        )
-      );
+        );
+      });
     }
     if (this.levels[level].porks.length >= 1) {
-      this.levels[level].pork.forEach((pork) =>
+      this.levels[level].porks.forEach((pork) =>
         this.porks.push(new Pork(this.ctx, this.canvasSize, ...pork))
       );
     }
@@ -98,7 +100,7 @@ const vikingGame = {
 
   createCharacters() {
     this.characters.push(
-      new Viking1(
+      new Character1(
         this.ctx,
         this.canvasSize,
         "./img/frog/frogIdle.png",
@@ -114,7 +116,7 @@ const vikingGame = {
       )
     );
     this.characters.push(
-      new Viking2(
+      new Character2(
         this.ctx,
         this.canvasSize,
         "./img/turtle/turtleRight.png",
@@ -130,7 +132,7 @@ const vikingGame = {
       )
     );
     this.characters.push(
-      new Viking3(
+      new Character3(
         this.ctx,
         this.canvasSize,
         "./img/trunk/trunkIdle.png",
@@ -200,7 +202,6 @@ const vikingGame = {
   saveChests() {
     this.levels.forEach((level) => this.chests.push(level.chests));
   },
-
   checkChests() {
     let charactersInChest = 0;
     this.characters.forEach((character) => {
@@ -215,7 +216,7 @@ const vikingGame = {
         character.haveKey = true;
       });
 
-      this.levels[this.actualLevel].keysItems.splice(0, 1);
+      this.keyTaken = true;
     }
   },
 
@@ -231,10 +232,11 @@ const vikingGame = {
       character.isDead = false;
       character.lives = 3;
       character.haveKey = false;
-      console.log(character);
     });
     this.porks.splice(0);
     this.sentinels.splice(0);
+    this.keyTaken = false;
+
     this.createEnemies(actualLevel);
   },
   checkHitBoxTwoElements(characters, enemyArrows) {
@@ -255,7 +257,7 @@ const vikingGame = {
     }
   },
 
-  receiveDamage(characters, enemy, enemyElement) {
+  receiveDamage(characters, enemy, enemyElement, typeEnemy) {
     if (enemyElement) {
       if (this.checkHitBoxTwoElements(characters, enemy)) {
         const colisionObject = this.checkHitBoxTwoElements(characters, enemy);
@@ -266,13 +268,17 @@ const vikingGame = {
           character.lives -= 1;
           if (character.lives <= 0) {
             character.isDead = true;
-            const enemyIndex = this.sentinels.indexOf(character);
-            this.sentinels.splice(enemyIndex, 1);
+            if (typeEnemy == "sentinel") {
+              const enemyIndex = this.sentinels.indexOf(character);
+              this.sentinels.splice(enemyIndex, 1);
+            }
+            if (typeEnemy == "pork") {
+              const enemyIndex = this.porks.indexOf(character);
+              this.porks.splice(enemyIndex, 1);
+            }
           }
         }
         if (character.isVulnerable) {
-          console.log(character.lives);
-
           if (!character.usingShell) {
             character.lives -= 1;
           }
@@ -290,8 +296,6 @@ const vikingGame = {
         const colisionObject = this.checkHitBoxTwoElements(characters, enemy);
         const character = colisionObject[1][0];
         if (character.isVulnerable) {
-          console.log(character.isVulnerable);
-          console.log(character.usingShell);
           if (!character.usingShell) character.lives -= 1;
           if (character.lives <= 0) {
             return this.restartLevel(this.actualLevel, this.characters);
@@ -315,9 +319,11 @@ const vikingGame = {
       character.lives = 3;
       character.haveKey = false;
     });
+    this.keyTaken = false;
     this.sentinels.splice(0);
     this.porks.splice(0);
     this.createEnemies(levelToChange);
+    this.levels[this.actualLevel].keysStatus = true;
   },
   isDead(character) {
     character.isDead = true;
@@ -347,7 +353,10 @@ const vikingGame = {
 
   drawAll() {
     this.levels[0].init(this.framesCounter, this.characters, this.keysStatus);
+
     this.levels[this.actualLevel].init();
+    !this.keyTaken && this.levels[this.actualLevel].drawKey();
+
     this.takeKeysItem();
     this.characters.forEach((character) =>
       character.init(this.framesCounter, this.actualLevel)
@@ -362,12 +371,14 @@ const vikingGame = {
     this.receiveDamage(
       this.sentinels,
       this.characters[2].arrows,
-      this.characters[2]
+      this.characters[2],
+      "sentinel"
     );
     this.receiveDamage(
       this.porks,
       this.characters[2].arrows,
-      this.characters[2]
+      this.characters[2],
+      "pork"
     );
     this.receiveDamage(this.characters, this.sentinels);
     this.receiveDamage(this.characters, this.porks);

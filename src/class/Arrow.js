@@ -11,7 +11,7 @@ class Arrow {
   ) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
-    this.vikingPosition = subjectPosition;
+    this.subjectPosition = subjectPosition;
     this.subjectSize = subjectSize;
     this.direction = direction;
     this.position = {

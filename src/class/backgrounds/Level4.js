@@ -7,11 +7,16 @@ class Level4 extends Background {
       y: 79,
     };
     this.sentinels = [
-      // [79, 463, 50, 50, 100, 1, "right", "./img/sentinel/sentinelRight.png"],
-      // [706, 335, 50, 50, 100, 1, "left", "./img/sentinel/sentinelLeft.png"],
+      [20, 207, 50, 50, 100, 1, "right", "./img/sentinel/sentinelRight.png"],
     ];
-    this.porks = [];
+    this.porks = [
+      [189, 463, 50, 50, 1, 4, "./img/pork/porkRigth.png"],
+      [737, 463, 50, 50, 1, 4, "./img/pork/porkRigth.png"],
+    ];
+    this.keyPostion = [570, 342];
+    this.chestPostion = [522, 20];
   }
+
   init() {
     this.clearAll();
     this.drawAll();
@@ -111,7 +116,6 @@ class Level4 extends Background {
         this.canvasSize.h / 6,
       ],
     ];
-
     const stairs = [
       [
         this.canvasSize.w - this.canvasSize.w / 1.82,
@@ -130,14 +134,13 @@ class Level4 extends Background {
       this.stairs.push(new Stair(this.ctx, this.canvasSize, ...e));
     });
     this.chests.push(new Chest(this.ctx, this.canvasSize, 570, 342));
-    this.keysItems.push(new Key(this.ctx, this.canvasSize, 522, 180));
+    this.keysItems.push(new Key(this.ctx, this.canvasSize, 522, 20));
   }
   drawAll() {
     this.floors.forEach((e) => e.drawFloor());
     this.walls.forEach((e) => e.drawWall());
     this.stairs.forEach((e) => e.drawStairs());
     this.chests.forEach((e) => e.init());
-    this.keysItems.forEach((e) => e.init());
   }
   clearAll() {}
 }

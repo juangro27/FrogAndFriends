@@ -11,7 +11,10 @@ class Level3 extends Background {
       [40, 335, 50, 50, 100, 1, "right", "./img/sentinel/sentinelRight.png"],
     ];
     this.porks = [];
+    this.keyPostion = [930, 470];
+    this.chestPostion = [522, 220];
   }
+
   init() {
     this.clearAll();
     this.drawAll();
@@ -94,14 +97,13 @@ class Level3 extends Background {
       this.stairs.push(new Stair(this.ctx, this.canvasSize, ...e));
     });
     this.chests.push(new Chest(this.ctx, this.canvasSize, 930, 470));
-    this.keysItems.push(new Key(this.ctx, this.canvasSize, 522, 220));
+    this.keysItems.push(new Key(this.ctx, this.canvasSize, 522, 240));
   }
   drawAll() {
     this.floors.forEach((e) => e.drawFloor());
     this.walls.forEach((e) => e.drawWall());
     this.stairs.forEach((e) => e.drawStairs());
     this.chests.forEach((e) => e.init());
-    this.keysItems.forEach((e) => e.init());
   }
   clearAll() {}
 }

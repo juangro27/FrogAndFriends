@@ -1,13 +1,13 @@
-function checkHitBox(levelElements, level, vikingSize, vikingPosition, type) {
+function checkHitBox(levelElements, level, subjectSize, subjectPosition, type) {
   const arrayLevelElements = levelElements[level].map((elm) => {
     if (
-      vikingPosition.x < elm.position.x + elm.size.w &&
-      vikingPosition.x + vikingSize.w > elm.position.x &&
-      vikingPosition.y < elm.position.y + elm.size.h &&
-      vikingSize.h + vikingPosition.y > elm.position.y
+      subjectPosition.x < elm.position.x + elm.size.w &&
+      subjectPosition.x + subjectSize.w > elm.position.x &&
+      subjectPosition.y < elm.position.y + elm.size.h &&
+      subjectSize.h + subjectPosition.y > elm.position.y
     ) {
       if (type === "floor")
-        vikingPosition.y = elm.position.y - vikingSize.h + 1;
+        subjectPosition.y = elm.position.y - subjectSize.h + 1;
       return true;
     } else {
       return false;

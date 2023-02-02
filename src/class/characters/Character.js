@@ -37,7 +37,6 @@ class Character {
     this.keysItems = keysItems;
     this.enemyArrows = enemyArrows;
     this.haveKey = false;
-    this.isDead = false;
     this.image = new Image();
     this.image.src = imgName;
     this.image.frames = numberFrames;
@@ -45,14 +44,13 @@ class Character {
   }
   init(framesCounter, actualLevel) {
     this.actualLevel = actualLevel;
-    if (!this.isDead) {
-      this.clearAll();
-      this.drawAll(framesCounter);
-      this.checkKey();
-    }
+    this.clearAll();
+    this.drawAll(framesCounter);
+
+    this.checkKey();
   }
   drawAll(framesCounter) {
-    this.createViking();
+    this.createCharacter();
     this.animate(framesCounter);
   }
   clearAll() {}
@@ -64,7 +62,7 @@ class Character {
       this.image.framesIndex = 0;
     }
   }
-  createViking() {
+  createCharacter() {
     this.ctx.drawImage(
       this.image,
       (this.image.width / this.image.frames) * this.image.framesIndex,

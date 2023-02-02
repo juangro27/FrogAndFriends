@@ -7,6 +7,7 @@ class Background {
     this.walls = [];
     this.chests = [];
     this.keysItems = [];
+    this.keyStatus = true;
     this.background = new Image();
     this.background.src = "./img/background/background1.png";
     this.background2 = new Image();
@@ -175,6 +176,9 @@ class Background {
       120,
       40
     );
+  }
+  drawKey() {
+    this.keysItems.forEach((e) => e.init());
   }
   drawAll() {}
 }

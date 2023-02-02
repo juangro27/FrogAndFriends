@@ -1,4 +1,4 @@
-class Viking1 extends Character {
+class Character1 extends Character {
   constructor(
     ctx,
     canvasSize,
@@ -34,8 +34,6 @@ class Viking1 extends Character {
     };
   }
   move(keysStatus) {
-    console.log("y" + this.position.y, "x" + this.position.x);
-
     if (keysStatus.RIGHT) {
       if (this.position.x < this.canvasSize.w - this.size.w)
         this.position.x += this.speed.x;

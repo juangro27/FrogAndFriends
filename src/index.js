@@ -1,1 +1,1 @@
-window.onload = () => vikingGame.init();
+window.onload = () => frogAndFriends.init();

@@ -11,6 +11,8 @@ class Level2 extends Background {
       [950, 207, 50, 50, 100, 1, "left", "./img/sentinel/sentinelLeft.png"],
     ];
     this.porks = [];
+    this.keyPostion = [901, 463];
+    this.chestPostion = [483, 335];
   }
   init() {
     this.clearAll();
@@ -113,12 +115,12 @@ class Level2 extends Background {
     this.chests.push(new Chest(this.ctx, this.canvasSize, 901, 463));
     this.keysItems.push(new Key(this.ctx, this.canvasSize, 483, 335));
   }
+
   drawAll() {
     this.floors.forEach((e) => e.drawFloor());
     this.walls.forEach((e) => e.drawWall());
     this.stairs.forEach((e) => e.drawStairs());
     this.chests.forEach((e) => e.init());
-    this.keysItems.forEach((e) => e.init());
   }
   clearAll() {}
 }

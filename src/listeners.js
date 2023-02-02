@@ -2,38 +2,38 @@ function setEventListeners(keys) {
   document.addEventListener("keydown", (e) => {
     switch (e.key) {
       case keys.UP:
-        vikingGame.keysStatus.UP = true;
+        frogAndFriends.keysStatus.UP = true;
         break;
       case keys.RIGHT:
-        vikingGame.keysStatus.RIGHT = true;
+        frogAndFriends.keysStatus.RIGHT = true;
         break;
       case keys.LEFT:
-        vikingGame.keysStatus.LEFT = true;
+        frogAndFriends.keysStatus.LEFT = true;
         break;
       case keys.DOWN:
-        vikingGame.keysStatus.DOWN = true;
+        frogAndFriends.keysStatus.DOWN = true;
         break;
       case keys.SPACE:
-        vikingGame.keysStatus.SPACE = true;
+        frogAndFriends.keysStatus.SPACE = true;
         break;
       case keys.CTRL:
-        vikingGame.changeCharacter(vikingGame.changeCharacterCount);
-        vikingGame.changeCharacterCount >= 2
-          ? (vikingGame.changeCharacterCount = 0)
-          : vikingGame.changeCharacterCount++;
+        frogAndFriends.changeCharacter(frogAndFriends.changeCharacterCount);
+        frogAndFriends.changeCharacterCount >= 2
+          ? (frogAndFriends.changeCharacterCount = 0)
+          : frogAndFriends.changeCharacterCount++;
 
         break;
       case keys.A:
-        vikingGame.keysStatus.A = true;
+        frogAndFriends.keysStatus.A = true;
         break;
       case keys.S:
-        vikingGame.keysStatus.S = true;
+        frogAndFriends.keysStatus.S = true;
         break;
       case keys.D:
-        vikingGame.keysStatus.D = true;
+        frogAndFriends.keysStatus.D = true;
         break;
       case keys.W:
-        vikingGame.keysStatus.W = true;
+        frogAndFriends.keysStatus.W = true;
         break;
       default:
         break;
@@ -42,31 +42,31 @@ function setEventListeners(keys) {
   document.addEventListener("keyup", (e) => {
     switch (e.key) {
       case keys.UP:
-        vikingGame.keysStatus.UP = false;
+        frogAndFriends.keysStatus.UP = false;
         break;
       case keys.RIGHT:
-        vikingGame.keysStatus.RIGHT = false;
+        frogAndFriends.keysStatus.RIGHT = false;
         break;
       case keys.LEFT:
-        vikingGame.keysStatus.LEFT = false;
+        frogAndFriends.keysStatus.LEFT = false;
         break;
       case keys.DOWN:
-        vikingGame.keysStatus.DOWN = false;
+        frogAndFriends.keysStatus.DOWN = false;
         break;
       case keys.SPACE:
-        vikingGame.keysStatus.SPACE = false;
+        frogAndFriends.keysStatus.SPACE = false;
         break;
       case keys.A:
-        vikingGame.keysStatus.A = false;
+        frogAndFriends.keysStatus.A = false;
         break;
       case keys.S:
-        vikingGame.keysStatus.S = false;
+        frogAndFriends.keysStatus.S = false;
         break;
       case keys.D:
-        vikingGame.keysStatus.D = false;
+        frogAndFriends.keysStatus.D = false;
         break;
       case keys.W:
-        vikingGame.keysStatus.W = false;
+        frogAndFriends.keysStatus.W = false;
         break;
       default:
         break;
