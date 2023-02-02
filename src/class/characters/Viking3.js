@@ -9,7 +9,7 @@ class Viking3 extends Character {
     actualLevel,
     floors,
     stairs,
-    doors,
+    chests,
     keysItems,
     enemyArrows,
     arrows
@@ -24,68 +24,73 @@ class Viking3 extends Character {
       actualLevel,
       floors,
       stairs,
-      doors,
+      chests,
       keysItems,
       enemyArrows,
       arrows
     );
     this.status = false;
-    this.arrows = arrows;
+    this.arrows = [];
     this.arrowImage = "./img/trunk/trunkBullet.png";
     this.arrowNumberFrames = 1;
   }
   move(keysStatus) {
-    if (
-      (keysStatus.RIGHT &&
+    if (!this.isDead) {
+      if (
+        (keysStatus.RIGHT &&
+          checkHitBox(
+            this.floors,
+            this.actualLevel,
+            this.size,
+            this.position,
+            "floor"
+          )) ||
+        (keysStatus.RIGHT &&
+          checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
+      ) {
+        if (this.position.x < this.canvasSize.w - this.size.w)
+          this.position.x += this.speed.x;
+
+        this.changeSprite("./img/trunk/TrunkWalkRigth.png", 14);
+      } else if (
+        (keysStatus.LEFT &&
+          checkHitBox(
+            this.floors,
+            this.actualLevel,
+            this.size,
+            this.position,
+            "floor"
+          )) ||
+        (keysStatus.LEFT &&
+          checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
+      ) {
+        if (this.position.x > 0) this.position.x -= this.speed.x;
+
+        this.changeSprite("./img/trunk/TrunkWalkLeft.png", 14);
+      } else if (
+        keysStatus.UP &&
+        checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
+      ) {
+        this.position.y -= this.speed.x;
+      } else if (
+        keysStatus.DOWN &&
+        checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
+      ) {
+        this.position.y += this.speed.x;
+      }
+      if (
         checkHitBox(
           this.floors,
           this.actualLevel,
           this.size,
           this.position,
           "floor"
-        )) ||
-      (keysStatus.RIGHT &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
-    ) {
-      this.position.x += this.speed.x;
-      this.changeSprite("./img/trunk/TrunkWalkRigth.png", 14);
-    } else if (
-      (keysStatus.LEFT &&
-        checkHitBox(
-          this.floors,
-          this.actualLevel,
-          this.size,
-          this.position,
-          "floor"
-        )) ||
-      (keysStatus.LEFT &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
-    ) {
-      this.position.x -= this.speed.x;
-      this.changeSprite("./img/trunk/TrunkWalkLeft.png", 14);
-    } else if (
-      keysStatus.UP &&
-      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
-    ) {
-      this.position.y -= this.speed.x;
-    } else if (
-      keysStatus.DOWN &&
-      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
-    ) {
-      this.position.y += this.speed.x;
-    }
-    if (
-      checkHitBox(
-        this.floors,
-        this.actualLevel,
-        this.size,
-        this.position,
-        "floor"
-      ) === false &&
-      checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
-        false
-    ) {
-      this.setGravity();
+        ) === false &&
+        checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
+          false
+      ) {
+        this.setGravity();
+      }
     }
   }
 

@@ -27,6 +27,8 @@ class Enemy {
     this.image.frames = numberFrames;
     this.image.framesIndex = 0;
     this.actualLevel = actualLevel;
+    this.isEnemy = true;
+    this.isDead = false;
   }
   init(framesCounter) {
     this.drawAll(framesCounter);
@@ -75,26 +77,15 @@ class Sentinel extends Enemy {
     lives,
     actualLevel,
     direction,
-    imgName,
-    numberFrames
+    imgName
   ) {
-    super(
-      ctx,
-      canvasSize,
-      x,
-      y,
-      w,
-      h,
-      lives,
-      actualLevel,
-      imgName,
-      numberFrames
-    );
+    super(ctx, canvasSize, x, y, w, h, lives, actualLevel, imgName);
     this.arrowInitalPosition = {
       x: this.position.x + this.size.w - 35,
       y: this.position.y + 10,
     };
     this.direction = direction;
+    this.image.frames = 8;
     this.arrows = [];
   }
   init(framesCounter) {
@@ -133,43 +124,28 @@ class Sentinel extends Enemy {
     );
   }
 }
-class Skeleton extends Enemy {
-  constructor(
-    ctx,
-    canvasSize,
-    x,
-    y,
-    w,
-    h,
-    lives,
-    actualLevel,
-    imgName,
-    numberFrames
-  ) {
-    super(
-      ctx,
-      canvasSize,
-      x,
-      y,
-      w,
-      h,
-      lives,
-      actualLevel,
-      imgName,
-      numberFrames
-    );
+class Pork extends Enemy {
+  constructor(ctx, canvasSize, x, y, w, h, lives, actualLevel, imgName) {
+    super(ctx, canvasSize, x, y, w, h, lives, actualLevel, imgName);
+    this.image.frames = 12;
     this.direction = undefined;
     this.speed = {
       x: 0.5,
     };
   }
   init(framesCounter) {
-    this.clearAll();
+    if (this.isDead) {
+      this.position.x = -40;
+      this.position.y = -40;
+    }
+    if (!this.isDead) {
+      this.clearAll();
 
-    if (framesCounter % 300 === 0) this.direction = "right";
-    if (framesCounter % 600 === 0) this.direction = "left";
-    this.move(this.direction);
-    this.drawAll(framesCounter);
+      if (framesCounter % 300 === 0) this.direction = "right";
+      if (framesCounter % 600 === 0) this.direction = "left";
+      this.move(this.direction);
+      this.drawAll(framesCounter);
+    }
   }
   drawAll(framesCounter) {
     this.createEnemy();

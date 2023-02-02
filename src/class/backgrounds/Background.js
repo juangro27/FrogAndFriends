@@ -5,7 +5,7 @@ class Background {
     this.floors = [];
     this.stairs = [];
     this.walls = [];
-    this.doors = [];
+    this.chests = [];
     this.keysItems = [];
     this.background = new Image();
     this.background.src = "./img/background/background1.png";

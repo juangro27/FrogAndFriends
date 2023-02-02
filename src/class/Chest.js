@@ -1,10 +1,10 @@
-class Door {
-  constructor(ctx, canvasSize) {
+class Chest {
+  constructor(ctx, canvasSize, x, y) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.position = {
-      x: 900,
-      y: 430,
+      x: x,
+      y: y,
     };
     this.size = {
       w: 48,

@@ -2,6 +2,15 @@ class Level3 extends Background {
   constructor(ctx, canvasSize, enemies) {
     super(ctx, canvasSize);
     this.enemies = enemies;
+    this.charactersInitialPosition = {
+      x: 29,
+      y: 79,
+    };
+    this.sentinels = [
+      [79, 463, 50, 50, 100, 1, "right", "./img/sentinel/sentinelRight.png"],
+      [463, 300, 50, 50, 100, 1, "left", "./img/sentinel/sentinelLeft.png"],
+    ];
+    this.porks = [];
   }
   init() {
     this.clearAll();

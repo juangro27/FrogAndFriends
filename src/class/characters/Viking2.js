@@ -10,7 +10,7 @@ class Viking2 extends Character {
 
     floors,
     stairs,
-    doors,
+    chests,
     keysItems,
     enemyArrows
   ) {
@@ -25,13 +25,17 @@ class Viking2 extends Character {
 
       floors,
       stairs,
-      doors,
+      chests,
       keysItems,
       enemyArrows
     );
     this.status = false;
+    this.usingShell = false;
   }
-  shell() {}
+  shell() {
+    this.changeSprite("./img/turtle/turtleShell.png", 14);
+    this.usingShell = true;
+  }
   move(keysStatus) {
     if (
       (keysStatus.RIGHT &&
@@ -45,9 +49,11 @@ class Viking2 extends Character {
       (keysStatus.RIGHT &&
         checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
     ) {
-      this.changeSprite("./img/turtleRight.png", 14);
+      this.changeSprite("./img/turtle/turtleRight.png", 14);
+      this.usingShell = false;
 
-      this.position.x += this.speed.x;
+      if (this.position.x < this.canvasSize.w - this.size.w)
+        this.position.x += this.speed.x;
     } else if (
       (keysStatus.LEFT &&
         checkHitBox(
@@ -60,21 +66,23 @@ class Viking2 extends Character {
       (keysStatus.LEFT &&
         checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
     ) {
-      this.changeSprite("./img/turtleLeft.png", 14);
-      this.position.x -= this.speed.x;
+      this.changeSprite("./img/turtle/turtleLeft.png", 14);
+      this.usingShell = false;
+      if (this.position.x > 0) this.position.x -= this.speed.x;
     } else if (
       keysStatus.UP &&
       checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
     ) {
+      this.usingShell = false;
       this.position.y -= this.speed.x;
-      //
     } else if (
       keysStatus.DOWN &&
       checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
     ) {
+      this.usingShell = false;
       this.position.y += this.speed.x;
-      //
     }
+
     if (
       checkHitBox(
         this.floors,

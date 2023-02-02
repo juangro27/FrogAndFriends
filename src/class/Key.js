@@ -1,10 +1,10 @@
 class Key {
-  constructor(ctx, canvasSize) {
+  constructor(ctx, canvasSize, x, y) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.position = {
-      x: 980,
-      y: 70,
+      x: x,
+      y: y,
     };
     this.size = {
       w: 32,

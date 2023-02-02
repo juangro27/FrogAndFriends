@@ -9,7 +9,7 @@ class Character {
     actualLevel,
     floors,
     stairs,
-    doors,
+    chests,
     keysItems,
     enemyArrows
   ) {
@@ -33,20 +33,23 @@ class Character {
     this.lives = 3;
     this.floors = floors;
     this.stairs = stairs;
-    this.doors = doors;
+    this.chests = chests;
     this.keysItems = keysItems;
     this.enemyArrows = enemyArrows;
     this.haveKey = false;
+    this.isDead = false;
     this.image = new Image();
     this.image.src = imgName;
     this.image.frames = numberFrames;
     this.image.framesIndex = 0;
   }
-  init(framesCounter) {
-    this.clearAll();
-    this.drawAll(framesCounter);
-    this.receiveDamage();
-    this.checkKey();
+  init(framesCounter, actualLevel) {
+    this.actualLevel = actualLevel;
+    if (!this.isDead) {
+      this.clearAll();
+      this.drawAll(framesCounter);
+      this.checkKey();
+    }
   }
   drawAll(framesCounter) {
     this.createViking();
@@ -74,61 +77,63 @@ class Character {
       this.size.h
     );
   }
-  receiveDamage() {}
   move(keysStatus) {
-    if (
-      (keysStatus.RIGHT &&
+    if (!this.isDead) {
+      if (
+        (keysStatus.RIGHT &&
+          checkHitBox(
+            this.floors,
+            this.actualLevel,
+            this.size,
+            this.position,
+            "floor"
+          )) ||
+        (keysStatus.RIGHT &&
+          checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
+      ) {
+        if (!this.position.x >= this.canvasSize.w)
+          this.position.x += this.speed.x;
+      } else if (
+        (keysStatus.LEFT &&
+          checkHitBox(
+            this.floors,
+            this.actualLevel,
+            this.size,
+            this.position,
+            "floor"
+          )) ||
+        (keysStatus.LEFT &&
+          checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
+      ) {
+        this.position.x -= this.speed.x;
+      } else if (
+        keysStatus.UP &&
+        checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
+      ) {
+        this.position.y -= this.speed.x;
+      } else if (
+        keysStatus.DOWN &&
+        checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
+      ) {
+        this.position.y += this.speed.x;
+      }
+      if (
         checkHitBox(
           this.floors,
           this.actualLevel,
           this.size,
           this.position,
           "floor"
-        )) ||
-      (keysStatus.RIGHT &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
-    ) {
-      this.position.x += this.speed.x;
-    } else if (
-      (keysStatus.LEFT &&
-        checkHitBox(
-          this.floors,
-          this.actualLevel,
-          this.size,
-          this.position,
-          "floor"
-        )) ||
-      (keysStatus.LEFT &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
-    ) {
-      this.position.x -= this.speed.x;
-    } else if (
-      keysStatus.UP &&
-      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
-    ) {
-      this.position.y -= this.speed.x;
-    } else if (
-      keysStatus.DOWN &&
-      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
-    ) {
-      this.position.y += this.speed.x;
-    }
-    if (
-      checkHitBox(
-        this.floors,
-        this.actualLevel,
-        this.size,
-        this.position,
-        "floor"
-      ) === false &&
-      checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
-        false
-    ) {
-      this.setGravity();
+        ) === false &&
+        checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
+          false
+      ) {
+        this.setGravity();
+      }
     }
   }
-  isInDoor() {
-    return checkHitBox(this.doors, this.actualLevel, this.size, this.position);
+  isInChest() {
+    return checkHitBox(this.chests, this.actualLevel, this.size, this.position);
   }
   changeSprite(spriteName, numberFrames) {
     this.image.frames = numberFrames;
