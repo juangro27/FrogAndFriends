@@ -33,7 +33,7 @@ class Viking2 extends Character {
     this.usingShell = false;
   }
   shell() {
-    this.changeSprite("./img/turtle/turtleShell.png", 14);
+    this.isVulnerable && this.changeSprite("./img/turtle/turtleShell.png", 14);
     this.usingShell = true;
   }
   move(keysStatus) {
@@ -49,7 +49,9 @@ class Viking2 extends Character {
       (keysStatus.RIGHT &&
         checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
     ) {
-      this.changeSprite("./img/turtle/turtleRight.png", 14);
+      this.isVulnerable
+        ? this.changeSprite("./img/turtle/turtleRight.png", 14)
+        : this.changeSprite("./img/turtle/turtleHitRight.png", 5);
       this.usingShell = false;
 
       if (this.position.x < this.canvasSize.w - this.size.w)
@@ -66,7 +68,9 @@ class Viking2 extends Character {
       (keysStatus.LEFT &&
         checkHitBox(this.stairs, this.actualLevel, this.size, this.position))
     ) {
-      this.changeSprite("./img/turtle/turtleLeft.png", 14);
+      this.isVulnerable
+        ? this.changeSprite("./img/turtle/turtleLeft.png", 14)
+        : this.changeSprite("./img/turtle/turtleHitLeft.png", 5);
       this.usingShell = false;
       if (this.position.x > 0) this.position.x -= this.speed.x;
     } else if (

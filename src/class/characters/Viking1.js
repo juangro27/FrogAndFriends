@@ -34,41 +34,42 @@ class Viking1 extends Character {
     };
   }
   move(keysStatus) {
-    // console.log("y" + this.position.y, "x" + this.position.x);
+    console.log("y" + this.position.y, "x" + this.position.x);
 
-    if (!this.isDead) {
-      if (keysStatus.RIGHT) {
-        if (this.position.x < this.canvasSize.w - this.size.w)
-          this.position.x += this.speed.x;
-        this.changeSprite("./img/frogWalkRigth.png", 12);
-      } else if (keysStatus.LEFT) {
-        if (this.position.x > 0) this.position.x -= this.speed.x;
-
-        this.changeSprite("./img/frogWalkleft.png", 12);
-      } else if (
-        keysStatus.UP &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
-      ) {
-        this.position.y -= this.speed.x;
-      } else if (
-        keysStatus.DOWN &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
-      ) {
-        this.position.y += this.speed.x;
-      }
-      if (
-        checkHitBox(
-          this.floors,
-          this.actualLevel,
-          this.size,
-          this.position,
-          "floor"
-        ) === false &&
-        checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
-          false
-      ) {
-        this.setGravity();
-      }
+    if (keysStatus.RIGHT) {
+      if (this.position.x < this.canvasSize.w - this.size.w)
+        this.position.x += this.speed.x;
+      this.isVulnerable
+        ? this.changeSprite("./img/frog/frogWalkRight.png", 12)
+        : this.changeSprite("./img/frog/frogHitRight.png", 7);
+    } else if (keysStatus.LEFT) {
+      if (this.position.x > 0) this.position.x -= this.speed.x;
+      this.isVulnerable
+        ? this.changeSprite("./img/frog/frogWalkleft.png", 12)
+        : this.changeSprite("./img/frog/frogHitLeft.png", 7);
+    } else if (
+      keysStatus.UP &&
+      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
+    ) {
+      this.position.y -= this.speed.x;
+    } else if (
+      keysStatus.DOWN &&
+      checkHitBox(this.stairs, this.actualLevel, this.size, this.position)
+    ) {
+      this.position.y += this.speed.x;
+    }
+    if (
+      checkHitBox(
+        this.floors,
+        this.actualLevel,
+        this.size,
+        this.position,
+        "floor"
+      ) === false &&
+      checkHitBox(this.stairs, this.actualLevel, this.size, this.position) ===
+        false
+    ) {
+      this.setGravity();
     }
   }
 

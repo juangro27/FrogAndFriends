@@ -11,7 +11,7 @@ const vikingGame = {
     w: 1024,
     h: 768,
   },
-  actualLevel: 3,
+  actualLevel: 4,
   levels: [],
   floors: [],
   stairs: [],
@@ -78,6 +78,7 @@ const vikingGame = {
     this.levels.push(new Level1(this.ctx, this.canvasSize));
     this.levels.push(new Level2(this.ctx, this.canvasSize));
     this.levels.push(new Level3(this.ctx, this.canvasSize));
+    this.levels.push(new Level4(this.ctx, this.canvasSize));
   },
 
   createEnemies(level) {
@@ -100,7 +101,7 @@ const vikingGame = {
       new Viking1(
         this.ctx,
         this.canvasSize,
-        "./img/ninjaIdle.png",
+        "./img/frog/frogIdle.png",
         11,
         50,
         50,
@@ -118,8 +119,8 @@ const vikingGame = {
         this.canvasSize,
         "./img/turtle/turtleRight.png",
         14,
-        50,
-        50,
+        54,
+        36,
         this.actualLevel,
         this.floors,
         this.stairs,
@@ -345,7 +346,7 @@ const vikingGame = {
   },
 
   drawAll() {
-    this.levels[0].init();
+    this.levels[0].init(this.framesCounter, this.characters, this.keysStatus);
     this.levels[this.actualLevel].init();
     this.takeKeysItem();
     this.characters.forEach((character) =>
