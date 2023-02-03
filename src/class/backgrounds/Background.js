@@ -10,16 +10,6 @@ class Background {
     this.keyStatus = true;
     this.background = new Image();
     this.background.src = "./img/background/background1.png";
-    this.background2 = new Image();
-    this.background2.src = "./img/background/background2.png";
-    this.background3 = new Image();
-    this.background3.src = "./img/background/background3.png";
-    this.background3a = new Image();
-    this.background3a.src = "./img/background/background4a.png";
-    this.background3b = new Image();
-    this.background3b.src = "./img/background/background4b.png";
-    this.land = new Image();
-    this.land.src = "./img/background/tile4.png";
     this.trunk = new Image();
     this.trunk.src = "./img/trunk/trunkIdle.png";
     this.trunk.frames = 18;
@@ -87,43 +77,7 @@ class Background {
       0,
       0,
       this.canvasSize.w,
-      (this.canvasSize.h / 6) * 5
-    );
-    this.ctx.drawImage(
-      this.background2,
-      0,
-      0,
-      this.canvasSize.w,
-      (this.canvasSize.h / 6) * 5
-    );
-    this.ctx.drawImage(
-      this.background3,
-      0,
-      0,
-      this.canvasSize.w,
-      (this.canvasSize.h / 6) * 5
-    );
-    this.ctx.drawImage(
-      this.background3a,
-      0,
-      0,
-      this.canvasSize.w,
-      (this.canvasSize.h / 6) * 5
-    );
-    this.ctx.drawImage(
-      this.background3b,
-      0,
-      0,
-      this.canvasSize.w,
-      (this.canvasSize.h / 6) * 5
-    );
-    const ptrn = this.ctx.createPattern(this.land, "repeat");
-    this.ctx.fillStyle = ptrn;
-    this.ctx.fillRect(
-      0,
-      this.canvasSize.h - this.canvasSize.h / 4.5,
-      this.canvasSize.w,
-      this.canvasSize.h / 4
+      this.canvasSize.h
     );
     this.ctx.drawImage(
       this.frog,
