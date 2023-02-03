@@ -14,6 +14,10 @@ class Background {
     this.background2.src = "./img/background/background2.png";
     this.background3 = new Image();
     this.background3.src = "./img/background/background3.png";
+    this.background3a = new Image();
+    this.background3a.src = "./img/background/background4a.png";
+    this.background3b = new Image();
+    this.background3b.src = "./img/background/background4b.png";
     this.land = new Image();
     this.land.src = "./img/background/tile4.png";
     this.trunk = new Image();
@@ -94,6 +98,20 @@ class Background {
     );
     this.ctx.drawImage(
       this.background3,
+      0,
+      0,
+      this.canvasSize.w,
+      (this.canvasSize.h / 6) * 5
+    );
+    this.ctx.drawImage(
+      this.background3a,
+      0,
+      0,
+      this.canvasSize.w,
+      (this.canvasSize.h / 6) * 5
+    );
+    this.ctx.drawImage(
+      this.background3b,
       0,
       0,
       this.canvasSize.w,
