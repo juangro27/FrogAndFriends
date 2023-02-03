@@ -161,7 +161,7 @@ const frogAndFriends = {
     });
   },
 
-  useHability() {
+  useSkill() {
     if (this.keysStatus.SPACE === true && this.characters[0].status === true) {
       this.characters[0].checkJump(this.keysStatus);
       this.characters[0].jump();
@@ -346,7 +346,7 @@ const frogAndFriends = {
       }
       this.drawAll();
       this.moveCharacters();
-      this.useHability();
+      this.useSkill();
     }, 1000 / this.FPS);
     this.intervalID = intervalID;
   },
