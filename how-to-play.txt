@@ -1,0 +1,9 @@
+Controls
+Ctrl --- Change character
+Move left --- Left arrow
+Move right --- Right arrow
+Character ability --- Space
+Hints
+Ninja Frog: jump (press space)
+trunk shooter: shoot seeds (keep space pressed while moving)
+spike turtle: spike Shield (press space once to activate and move to deactivate)
