@@ -1,5 +1,5 @@
 class Background {
-  constructor(ctx, canvasSize, characters) {
+  constructor(ctx, canvasSize) {
     this.ctx = ctx;
     this.canvasSize = canvasSize;
     this.floors = [];
@@ -10,6 +10,8 @@ class Background {
     this.keyStatus = true;
     this.background = new Image();
     this.background.src = "./img/background/background1.png";
+    this.active = new Image();
+    this.active.src = "./img/background/active.png";
     this.trunk = new Image();
     this.trunk.src = "./img/trunk/trunkIdle.png";
     this.trunk.frames = 18;
@@ -43,6 +45,7 @@ class Background {
   init(framesCounter, characters, keysStatus) {
     this.generateBackground();
     this.animate(framesCounter, characters);
+    this.generateActive(characters);
     keysStatus.RIGHT && this.sound.play();
   }
   animate(framesCounter, characters) {
@@ -70,6 +73,16 @@ class Background {
     if (characters[2].lives === 3) this.trunkHearth.framesIndex = 0;
     if (characters[2].lives === 2) this.trunkHearth.framesIndex = 1;
     if (characters[2].lives === 1) this.trunkHearth.framesIndex = 2;
+  }
+  generateActive(characters) {
+    characters.forEach((character, index) => {
+      if (index === 0 && character.status)
+        this.ctx.drawImage(this.active, 190, 720, 121, 28);
+      if (index === 1 && character.status)
+        this.ctx.drawImage(this.active, 480, 720, 121, 28);
+      if (index === 2 && character.status)
+        this.ctx.drawImage(this.active, 770, 720, 121, 28);
+    });
   }
   generateBackground() {
     this.ctx.drawImage(
